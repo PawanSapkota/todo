@@ -17,8 +17,7 @@ const EditTodo = ({setEditCurrentTodo,setTodoName}) => {
       <input type="text  " className="border py-1 px-2 rounded" placeholder="Enter your task here"
         value={editedValue}
         onChange={((e)=>{
-          const data =  setEditedValue(e.target.value)
-          setTodoName = data
+           setEditedValue(e.target.value)        
             
         })}/>    
         <button onClick={saveTodo} className="bg-blue-600 text-white p-1 rounded ">Save</button>    

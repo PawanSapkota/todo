@@ -1,35 +1,47 @@
 import React, { useState } from 'react'
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
-import EditTodo from './EditTodo';
+// import EditTodo from './EditTodo';
 
 const Todo = () => {      
       const [todoName,setTodoName]=useState("")
-      const [showTodo,setShowTodo]=useState([])
-      const[editCurrentTodo,setEditCurrentTodo]=useState([])
+      const [showTodoData,setShowTodoData]=useState([])
+
+     
+      // const[editCurrentClick,setEditCurrentClick]=useState(false)
+      const [editIndex,setEditIndex] =useState(null)
 
 
       const addtodo =()=>{
-        setShowTodo(pre=>
-            [...pre,todoName]
-            
+        if (editIndex !== null) {
+          // If editIndex is not null, it means we are editing an existing todo
+          const updatedTodos = [...showTodoData];
+          updatedTodos[editIndex] = todoName;
+          setShowTodoData(updatedTodos);
+          setEditIndex(null); // Reset editIndex after editing
+        } 
+        else{
+           setShowTodoData(pre=>
+            [...pre,todoName]            
         )
         setTodoName('')
+        }
+
       }
 
       const removeTodo =(index)=>{
         console.log(index)
-        setShowTodo((pre)=> {
+        setShowTodoData((pre)=> {
             const newTodos =[...pre]
             newTodos.splice(index,1);
             return newTodos
         })
       }
 
-      const editTodo =(index)=>{
-        console.log(index)
-       setEditCurrentTodo(index)
-
+      const editTodo =(index)=>{        
+        setEditIndex(index);
+        setTodoName(showTodoData[index]);
+  
       }
 
     
@@ -44,18 +56,18 @@ const Todo = () => {
         onChange={((e)=>{
             setTodoName(e.target.value)
         })}/>    
-        <button onClick={addtodo} className="bg-blue-600 text-white p-1 rounded ">Submit</button>      
+        <button onClick={addtodo} className="bg-blue-600 text-white p-1 rounded ">{editIndex !== null ? 'Update' : 'Submit'}</button>      
     </div> 
 
     {
-        showTodo.length  > 0 && (
+        showTodoData.length  > 0 && (
         <ul  className='border '>
-            {showTodo.map((val,i)=>{
+            {showTodoData.map((val,i)=>{
                 return(
                     <li className='shadow p-1 mt-2 w-full flex items-center relative' key={i}>{val}                   
                         <button onClick={()=>removeTodo(i)}><FaDeleteLeft className='text-xl font-bold absolute  top-0 right-1'/></button>
                         <button onClick={()=>
-                          editTodo(i)                          
+                          editTodo(i)                  
                         }><MdEdit  className='text-xl absolute top-0 right-5 font-bold'/>
                         </button> 
                     </li>
@@ -63,13 +75,15 @@ const Todo = () => {
                   })}
      
         </ul>
-        )
-        
+        )        
         
       }
-      {editCurrentTodo === 0  &&(
-        <EditTodo setEditCurrentTodo={setEditCurrentTodo} setTodoName={setTodoName}/>
-      )}
+      {/* {
+        editCurrentTodo.length > 0 &&(
+          <EditTodo/>
+        )
+      } */}
+      
 
    
   </div>
