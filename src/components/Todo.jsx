@@ -1,24 +1,20 @@
 import React, { useState } from 'react'
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
-// import EditTodo from './EditTodo';
 
 const Todo = () => {      
       const [todoName,setTodoName]=useState("")
       const [showTodoData,setShowTodoData]=useState([])
-
      
-      // const[editCurrentClick,setEditCurrentClick]=useState(false)
       const [editIndex,setEditIndex] =useState(null)
 
 
       const addtodo =()=>{
         if (editIndex !== null) {
-          // If editIndex is not null, it means we are editing an existing todo
           const updatedTodos = [...showTodoData];
           updatedTodos[editIndex] = todoName;
           setShowTodoData(updatedTodos);
-          setEditIndex(null); // Reset editIndex after editing
+          setEditIndex(null);
         } 
         else{
            setShowTodoData(pre=>
@@ -26,7 +22,6 @@ const Todo = () => {
         )
         setTodoName('')
         }
-
       }
 
       const removeTodo =(index)=>{
@@ -40,11 +35,8 @@ const Todo = () => {
 
       const editTodo =(index)=>{        
         setEditIndex(index);
-        setTodoName(showTodoData[index]);
-  
-      }
-
-    
+        setTodoName(showTodoData[index]);  
+      } 
       
 
   return (
