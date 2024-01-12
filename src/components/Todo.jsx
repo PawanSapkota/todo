@@ -36,6 +36,7 @@ const Todo = () => {
       const editTodo =(index)=>{        
         setEditIndex(index);
         setTodoName(showTodoData[index]);  
+     
       } 
       
 
